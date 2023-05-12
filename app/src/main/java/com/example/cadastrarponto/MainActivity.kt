@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
@@ -120,198 +121,152 @@ fun Greeting(name: String) {
 
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-        //.background(color = Color(120, 160, 87 ))
-
-    ) {
-
-        Text(
-            text = stringResource(id = R.string.solicite_coleta),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
+                .fillMaxSize()
+        ) {
+
+        Text(text = "Solicite uma coleta", modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 40.dp),
             fontSize = 19.sp,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center,
-            color = Color.White
-        )
+            color = Color.White)
 
-        Text(
-            text = stringResource(id = R.string.formulario),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 1.dp, bottom = 1.dp),
-            fontSize = 16.sp,
-            fontWeight = FontWeight.ExtraBold,
-            textAlign = TextAlign.Center,
-            color = Color.Black
-        )
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center)
+            {
 
-        Text(
-            text = stringResource(id = R.string.primeiro),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 1.dp),
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center,
-            color = Color.Black
-        )
+                Card(
+                    modifier = Modifier
+                        .width(500.dp)
+                        .height(560.dp)
+                        .padding(start = 15.dp, end = 15.dp,),
+                    shape = RoundedCornerShape(20.dp),
+                    backgroundColor = Color(255, 255, 255)
+                )
+                {
+                    Image(
+                        painter = painterResource(R.drawable.image_fundo_card),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
+                    )
 
-        Column(modifier = Modifier.padding(3.dp)) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally)
+                    {
+                        Text(
+                            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 14.dp),
+                            text = "Você posssui uma coleta em andamento",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
 
-            OutlinedTextField(
-                value = selectedLocal,
-                onValueChange = { selectedLocal = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { coordinates ->
-                        textFieldSize = coordinates.size.toSize()
-                    },
-                colors = TextFieldDefaults.textFieldColors(backgroundColor = Color(188, 219, 183),),
-//                shape = RoundedCornerShape(16.dp),
-                label = { Text(text = "Selecione o local") },
-
-                trailingIcon = {
-                    Icon(icon1, "", Modifier.clickable { expanded1 = !expanded1 })
-                }
-            )
-
-            DropdownMenu(
-                expanded = expanded1,
-                onDismissRequest = { expanded1 = false },
-                modifier = Modifier
-                    .width(with(LocalDensity.current) { textFieldSize.width.toDp() }),
-
-                ) {
-                list1.forEach { label ->
-                    DropdownMenuItem(onClick = {
-                        selectedLocal = label
-
-                        expanded1 = false
-
-                    }) {
-
-                        Text(text = label)
-
-
-
-
-                    }
-
-
-                }
-            }
-
-        }
-
-
-
-
-
-        Text(
-            text = stringResource(id = R.string.segundo),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 1.dp),
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center,
-            color = Color.Black
-        )
-
-        Spacer(modifier = Modifier.padding(7.dp))
-
-        Column() {
-
-            TextField(
-                value = selectedItem,
-                onValueChange = { selectedItem = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { coordinates ->
-                        textFieldSize = coordinates.size.toSize()
-                    },
-                colors = TextFieldDefaults.textFieldColors(backgroundColor = Color(188, 219, 183),),
-                label = { Text(text = "Selecione os materias") },
-
-                trailingIcon = {
-                    Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
-                }
-            )
-
-            DropdownMenu(
-                expanded = expanded2,
-                onDismissRequest = { expanded2 = false },
-                modifier = Modifier
-                    .width(with(LocalDensity.current) { textFieldSize.width.toDp() }),
-
-                ) {
-                list2.forEach { label ->
-                    DropdownMenuItem(onClick = {
-                        selectedItem = label
-                        expanded2 = true
-
-                    }) {
-
-                        Text(text = label)
-
-
-                        val checkedState = remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = checkedState.value,
-                            onCheckedChange = { checkedState.value = it }
+                        Text(
+                            modifier = Modifier.padding(top = 7.dp),
+                            textAlign = TextAlign.Center,
+                            text = "Informações sobre a coleta",
+                            fontSize = 17.sp,
+                            color = Color(117, 117, 117)
                         )
 
 
+                        Column(
+                            modifier = Modifier
+                                .padding(top = 7.dp)
+                                .align(Alignment.Start)
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                modifier = Modifier,
+                                textAlign = TextAlign.Start,
+                                text = "Endereço da coleta:",
+                                fontSize = 18.sp,
+                                color = Color.Black
+                            )
+
+
+
+                            Text(
+                                modifier = Modifier,
+                                textAlign = TextAlign.Start,
+                                text = "Estrada das Pitas 952, Barueri, SP",
+                                fontSize = 17.sp,
+                                color = Color(117, 117, 117)
+                            )
+
+                            Text(
+                                modifier = Modifier.padding(top = 8.dp),
+                                textAlign = TextAlign.Start,
+                                text = "Materiais que serão recolhidos:",
+                                fontSize = 18.sp,
+                                color = Color.Black
+                            )
+
+
+
+                            Text(
+                                modifier = Modifier,
+                                textAlign = TextAlign.Start,
+                                text = "Ferro, Madeira",
+                                fontSize = 17.sp,
+                                color = Color(117, 117, 117)
+                            )
+
+
+                            Text(
+                                modifier = Modifier.padding(top = 8.dp),
+                                textAlign = TextAlign.Start,
+                                text = "Catador que irá recolher o material:",
+                                fontSize = 18.sp,
+                                color = Color.Black
+                            )
+
+
+
+                            Text(
+                                modifier = Modifier,
+                                textAlign = TextAlign.Start,
+                                text = "Wallace Pereira Santos",
+                                fontSize = 17.sp,
+                                color = Color(117, 117, 117)
+                            )
+
+
+                        }
+
+                        Image(
+                            painter = painterResource(R.drawable.foto_recycle),
+                            contentDescription = null,
+                            modifier = Modifier.size(180.dp).align(Alignment.CenterHorizontally)
+
+                        )
+
+
+
+
+                        //Spacer(modifier = Modifier.padding(20.dp))
+
+
+//                        Image(
+//                            painter = painterResource(id = R.drawable.foto),
+//                            contentDescription = stringResource(id = R.string.foto_tela),
+//                            modifier = Modifier
+//                                .align(CenterHorizontally)
+//                                .width(320.dp)
+//                                .height(310.dp)
+//                        )
+
+
                     }
+
+
                 }
 
+
             }
-
         }
-
-
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-
-        Button(onClick = { /*TODO*/ }, modifier = Modifier
-            .fillMaxWidth()
-            .height(53.dp)
-            .padding(top = 7.dp, start = 40.dp, end = 40.dp),
-            shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(107, 177, 115))
-        ) {
-            Text(text = "SOLICITAR",
-                color = Color.White,
-                //fontsize = 18.sp,
-                fontWeight = FontWeight.ExtraBold
-            )
-        }
-
-        Spacer(modifier = Modifier.padding(20.dp))
-
-
-        Image(
-            painter = painterResource(id = R.drawable.foto),
-            contentDescription = stringResource(id = R.string.foto_tela),
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .width(320.dp)
-                .height(310.dp)
-        )
-
-
     }
-
-
-
-}
-
-
 
 
 
